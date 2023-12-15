@@ -24,8 +24,8 @@ class Model(BenchmarkModel):
         super().__init__(test=test, device=device, batch_size=batch_size, extra_args=extra_args)
 
         if device == 'cpu':
-            # TODO - currently load_model assumes cuda
-            raise NotImplementedError("Tacotron2 doesn't support CPU because load_model assumes CUDA.")
+            # TODO - currently load_model assumes cuda/xpu
+            raise NotImplementedError("Tacotron2 doesn't support CPU because load_model assumes CUDA/XPU.")
 
         self.hparams = self.create_hparams(batch_size=self.batch_size)
         self.model = load_model(self.hparams).to(device=device)
