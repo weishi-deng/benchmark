@@ -9,13 +9,9 @@ DANGER: make sure to `python install.py` first or otherwise make sure the benchm
 Wall time provided for sanity but is not a sane benchmark measurement.
 """
 import argparse
-import logging
-import random
-import string
 import time
 
 import traceback
-from datetime import datetime
 from functools import partial
 
 import numpy as np
@@ -109,22 +105,22 @@ def printResultSummaryTime(
                 sep="",
             )
         )
-        print(
-            "{:<20} {:>20}".format(
-                "CPU Wall Time per batch:",
-                "%.3f milliseconds" % (cpu_walltime / model.num_batch),
-                sep="",
-            )
-        )
     else:
         cpu_walltime = np.median(list(map(lambda x: x[0], result_summary)))
-        print(
-            "{:<20} {:>20}".format(
-                "CPU Wall Time per batch:",
-                "%.3f milliseconds" % (cpu_walltime / model.num_batch),
-                sep="",
-            )
+    print(
+        "{:<20} {:>20}".format(
+            "CPU Wall Time per batch:",
+            "%.3f milliseconds" % (cpu_walltime / model.num_batch),
+            sep="",
         )
+    )
+    print(
+        "{:<20} {:>20}".format(
+            "CPU Wall Time:",
+            "%.3f milliseconds" % (cpu_walltime),
+            sep="",
+        )
+    )
     # if model_flops is not None, output the TFLOPs per sec
     if "flops" in metrics_needed:
         if flops_model_analyzer.metrics_backend_mapping["flops"] == "dcgm":
