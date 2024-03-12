@@ -107,7 +107,7 @@ class BenchmarkModel(metaclass=PostInitProcessor):
         if self.dargs.accuracy and not self.DISABLE_DETERMINISM:
             self.deterministic_dict = save_deterministic_dict(self.name)
         # if the args contain "--torchdynamo", parse torchdynamo args
-        if "--torchdynamo" in opt_args:
+        if "--torchdynamo" in opt_args or "--inductor" in opt_args:
             self.dynamo = True
             from torchbenchmark.util.backends.torchdynamo import parse_torchdynamo_args
             self.opt_args, self.extra_args = parse_torchdynamo_args(opt_args)
@@ -175,8 +175,7 @@ class BenchmarkModel(metaclass=PostInitProcessor):
         if self.device != "cuda":
             current_device_name = str(self.device)
         else:
-            current_device_name = torch.cuda.get_device_name()
-            assert current_device_name, f"torch.cuda.get_device_name() returns None when device is set to cuda, please double check."
+            current_device_name = torch.cuda.get_device_name() if torch.cuda.get_device_name() else "UNKNOWN"
             if current_device_name in SPECIAL_DEVICE_MAPPING:
                 current_device_name = SPECIAL_DEVICE_MAPPING[current_device_name]
 
