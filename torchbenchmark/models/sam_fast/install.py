@@ -12,7 +12,8 @@ def download_data():
     subprocess.check_call(['wget', '-P', '.data', 'https://github.com/facebookresearch/segment-anything/raw/main/notebooks/images/truck.jpg'])
 
 if __name__ == '__main__':
-    pip_install_requirements()
+    # disable this to avoid reinstalling torch
+    # pip_install_requirements()
 
     # Create .data folder in the script's directory
     data_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.data')
